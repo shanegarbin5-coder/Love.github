@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Love</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="cursive">
+
+<style>
+/* Make the video cover the whole page */
+#bgVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* Optional overlay for readability */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(128, 0, 128, 0.35);
+    z-index: 0;
+}
+
+body {
+    font-family: 'Pangolin', cursive;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    position: relative;
+}
+
+.section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.card {
+    background: white;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 1; /* Make sure card is above video */
+}
+
+h1, h2, p {
+    color: #800080;
+}
+
+button {
+    padding: 12px 25px;
+    margin: 12px;
+    border: none;
+    border-radius: 20px;
+    font-size: 22px;
+    cursor: pointer;
+    font-family: 'Pangolin', cursive;
+}
+
+.yes {
+    background-color: #9370DB;
+    color: white;
+}
+
+.no {
+    background-color: #ccc;
+}
+
+img, video {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+/* Heart animation */
+.heart {
+    position: absolute;
+    font-size: 100px;
+    animation: floatUp 1.5s forwards;
+}
+
+@keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-100px); }
+}
+
+/* Shake */
+.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND VIDEO -->
+<video id="bgVideo" autoplay muted loop>
+    <source src="TULIPSbg.mp4" type="video/mp4">
+</video>
+
+<!-- SECTION 1 -->
+<div class="section">
+    <div class="card" id="card">
+        <h1>Hello My Love!</h1>
+        <p>Do you want to see your gift?</p>
+
+        <button class="yes" onclick="showYes()">Yes Love</button>
+        <button class="no" onclick="showNo()">No Love</button>
+
+        <img id="yesImage" src="tulips.jpg" style="display:none;">
+        <img id="noImage" src="sad.jpg" style="display:none;">
+    </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section" id="memoriesSection" style="display:none;">
+    <div class="card">
+        <h2>Captured Memories</h2>
+        <img src="PIC1.jpg">
+        <img src="PIC2.jpg">
+        <button class="yes" onclick="goToSong()">Next Love</button>
+    </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section" id="songSection" style="display:none;">
+    <div class="card">
+        <h2>Nahanap kita 🎧</h2>
+        <video controls>
+            <source src="NAHANAPkita.mp4" type="video/mp4">
+        </video>
+        <button class="yes" onclick="goToLetter()">Next Love</button>
+    </div>
+</div>
+
+<!-- SECTION 4 : LOVE LETTER -->
+<div class="section" id="letterSection" style="display:none;">
+    <div class="card">
+        <h2>My Love Letter 💌</h2>
+        <img src="loveletter.jpg" alt="Love Letter">
+    </div>
+</div>
+
+<script>
+const card = document.getElementById("card");
+
+function showYes() {
+    document.getElementById("yesImage").style.display = "block";
+    document.getElementById("noImage").style.display = "none";
+
+    for (let i = 0; i < 5; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = "❤️";
+        heart.style.left = Math.random() * 80 + "%";
+        card.appendChild(heart);
+        setTimeout(() => heart.remove(), 1500);
+    }
+
+    setTimeout(() => {
+        const mem = document.getElementById("memoriesSection");
+        mem.style.display = "flex";
+        mem.scrollIntoView({ behavior: "smooth" });
+    }, 1000);
+}
+
+function showNo() {
+    document.getElementById("noImage").style.display = "block";
+    document.getElementById("yesImage").style.display = "none";
+    card.classList.add("shake");
+    setTimeout(() => card.classList.remove("shake"), 500);
+}
+
+function goToSong() {
+    const song = document.getElementById("songSection");
+    song.style.display = "flex";
+    song.scrollIntoView({ behavior: "smooth" });
+}
+
+function goToLetter() {
+    const letter = document.getElementById("letterSection");
+    letter.style.display = "flex";
+    letter.scrollIntoView({ behavior: "smooth" });
+}
+</script>
+
+</body>
+</html>
